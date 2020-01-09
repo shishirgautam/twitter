@@ -1,7 +1,5 @@
 package com.shishir.twitter;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -16,9 +14,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.shishir.twitter.api.ApiClass;
-import com.shishir.twitter.model.userModel;
 import com.shishir.twitter.model.checkModel;
+import com.shishir.twitter.model.userModel;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -31,10 +31,10 @@ public class SignUpActivity extends AppCompatActivity {
     int countUsername = 0;
     int initialbtn = 0;
     String method = "email";
-    String Email= "";
+    String Email = "";
     String Username = "";
-    boolean chekU=false;
-    boolean chekE=false;
+    boolean chekU = false;
+    boolean chekE = false;
     TextView tvChange, sn_em_error, sn_us_error;
 
 
@@ -44,45 +44,49 @@ public class SignUpActivity extends AppCompatActivity {
         setContentView(R.layout.activity_sign_up);
 
         //binding
-        sn_email = findViewById( R.id.SN_email );
-        sn_username = findViewById( R.id.SN_usernmae );
-        back=findViewById( R.id.SN_back );
-        sn_em_error = findViewById( R.id.SN_pass_error );
-        sn_us_error = findViewById( R.id.SN_username_error );
-        sn_Us = findViewById( R.id.SN_userP );
-        sn_Em = findViewById( R.id.SN_emailP );
-        btn_next = findViewById( R.id.btn_FS_signup );
-        tvChange = findViewById( R.id.textView9 );
+        sn_email = findViewById(R.id.SN_email);
+        sn_username = findViewById(R.id.SN_usernmae);
+        back = findViewById(R.id.SN_back);
+        sn_em_error = findViewById(R.id.SN_pass_error);
+        sn_us_error = findViewById(R.id.SN_username_error);
+        sn_Us = findViewById(R.id.SN_userP);
+        sn_Em = findViewById(R.id.SN_emailP);
+        btn_next = findViewById(R.id.btn_FS_signup);
+        tvChange = findViewById(R.id.textView9);
 
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
-            Email = bundle.getString( "email" );
-            Username = bundle.getString( "username" );
-            sn_email.setText( bundle.getString( "email" ) );
-            sn_username.setText( bundle.getString( "username" ) );
+            Email = bundle.getString("email");
+            Username = bundle.getString("username");
+            sn_email.setText(bundle.getString("email"));
+            sn_username.setText(bundle.getString("username"));
         }
-        back.setOnClickListener( new View.OnClickListener() {
-                                     @Override
-                                     public void onClick(View v) {
-                                         Intent back=new Intent( SignUpActivity.this,MainActivity.class );
-                                         startActivity( back );
-                                     }
-                                 }
+        back.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        Intent back = new Intent(SignUpActivity.this, MainActivity.class);
+                                        startActivity(back);
+                                    }
+                                }
         );
         btn_next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (chekE == true && chekU == true) {
 
-                    Toast.makeText( SignUpActivity.this, "user@gmal.com", Toast.LENGTH_SHORT ).show();
+                    userModel user = new userModel(Email);
+                    Checkuser(user);
+
+                } else {
+                    Toast.makeText(SignUpActivity.this, "fill require field with valid information", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
-
-
+            }
         });
 
 
-        sn_username.addTextChangedListener( new TextWatcher() {
+        sn_username.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -94,19 +98,19 @@ public class SignUpActivity extends AppCompatActivity {
                 if (count > 0) {
                     if (countUsername >= 0) {
                         countUsername = 50 - countL;
-                        sn_us_error.setTextColor( Color.BLACK );
-                        sn_us_error.setText( "" + countUsername );
-                        sn_Us.setImageResource( R.drawable.ic_checked );
-                        chekU=true;
+                        sn_us_error.setTextColor(Color.BLACK);
+                        sn_us_error.setText("" + countUsername);
+                        sn_Us.setImageResource(R.drawable.ic_checked);
+                        chekU = true;
                         Username = sn_username.getText().toString();
                         return;
                     } else if (countUsername < 0) {
                         countUsername = 50 - countL;
-                        sn_us_error.setTextColor( Color.RED );
-                        sn_us_error.setText( "Must be 50 characters or fewer." );
-                        sn_us_error.append( "      " + countUsername );
-                        chekU=false;
-                        sn_Us.setImageResource( R.drawable.ic_clear );
+                        sn_us_error.setTextColor(Color.RED);
+                        sn_us_error.setText("Must be 50 characters or fewer.");
+                        sn_us_error.append("      " + countUsername);
+                        chekU = false;
+                        sn_Us.setImageResource(R.drawable.ic_clear);
                         return;
 
 
@@ -118,32 +122,32 @@ public class SignUpActivity extends AppCompatActivity {
             public void afterTextChanged(Editable s) {
 
             }
-        } );
-        tvChange.setOnClickListener( new View.OnClickListener() {
+        });
+        tvChange.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (initialbtn == 0) {
                     method = "phone";
-                    sn_email.setText( "" );
+                    sn_email.setText("");
                     initialbtn++;
-                    sn_email.setHint( "used Phone number" );
-                    sn_email.setInputType( InputType.TYPE_CLASS_PHONE );
-                    sn_email.setMaxLines( 13 );
-                    tvChange.setText( "use email instead" );
+                    sn_email.setHint("used Phone number");
+                    sn_email.setInputType(InputType.TYPE_CLASS_PHONE);
+                    sn_email.setMaxLines(13);
+                    tvChange.setText("use email instead");
                     return;
                 } else {
                     method = "email";
-                    sn_email.setText( "" );
+                    sn_email.setText("");
                     initialbtn = 0;
-                    sn_email.setInputType( InputType.TYPE_CLASS_TEXT );
-                    sn_email.setHint( "used Email" );
-                    tvChange.setText( "use phone instead" );
+                    sn_email.setInputType(InputType.TYPE_CLASS_TEXT);
+                    sn_email.setHint("used Email");
+                    tvChange.setText("use phone instead");
                     return;
                 }
 
             }
-        } );
-        sn_email.addTextChangedListener( new TextWatcher() {
+        });
+        sn_email.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -154,30 +158,30 @@ public class SignUpActivity extends AppCompatActivity {
 
                 switch (method) {
                     case "email":
-                        sn_em_error.setText( "" );
-                        if ((sn_email.getText().toString().toLowerCase().contains( "@" )) && (sn_email.getText().toString().toLowerCase().contains( ".com" ))) {
-                            sn_Em.setImageResource( R.drawable.ic_checked );
+                        sn_em_error.setText("");
+                        if ((sn_email.getText().toString().toLowerCase().contains("@")) && (sn_email.getText().toString().toLowerCase().contains(".com"))) {
+                            sn_Em.setImageResource(R.drawable.ic_checked);
                             Email = sn_email.getText().toString();
-                            chekE=true;
+                            chekE = true;
                         } else {
-                            sn_em_error.setText( "check your email" );
-                            sn_Em.setImageResource( R.drawable.ic_clear );
-                            chekE=false;
+                            sn_em_error.setText("check your email");
+                            sn_Em.setImageResource(R.drawable.ic_clear);
+                            chekE = false;
 
                         }
                         break;
                     case "phone":
-                        sn_em_error.setText( "" );
+                        sn_em_error.setText("");
                         if ((sn_email.length() != 10)) {
-                            sn_em_error.setText( "check your number" );
-                            sn_Em.setImageResource( R.drawable.ic_clear );
-                            chekE=false;
+                            sn_em_error.setText("check your number");
+                            sn_Em.setImageResource(R.drawable.ic_clear);
+                            chekE = false;
                             return;
 
                         } else {
-                            sn_Em.setImageResource( R.drawable.ic_checked );
+                            sn_Em.setImageResource(R.drawable.ic_checked);
                             Email = sn_email.getText().toString();
-                            chekE=true;
+                            chekE = true;
                             return;
 
                         }
@@ -190,46 +194,46 @@ public class SignUpActivity extends AppCompatActivity {
             public void afterTextChanged(Editable s) {
 
             }
-        } );
+        });
 
     }
 
     void Checkuser(userModel um) {
         ApiClass apiClass = new ApiClass();
         Call<checkModel> checkCall = apiClass.calls().check(um);
-        checkCall.enqueue( new Callback<checkModel>() {
+        checkCall.enqueue(new Callback<checkModel>() {
             @Override
             public void onResponse(Call<checkModel> call, Response<checkModel> response) {
                 if (!response.isSuccessful()) {
-                    Toast.makeText( SignUpActivity.this, "error" + response.code(), Toast.LENGTH_SHORT ).show();
-                    Log.d( "error", "error" + response.code() );
+                    Toast.makeText(SignUpActivity.this, "error" + response.code(), Toast.LENGTH_SHORT).show();
+                    Log.d("error", "error" + response.code());
                     return;
                 }
                 checkModel checkModel = response.body();
                 //Toast.makeText( SignUP.this, "user " + check.getStatus(), Toast.LENGTH_SHORT ).show();
-                if (checkModel.getStatus().equals( "good to go" )) {
-                    Intent next = new Intent( SignUpActivity.this, CustomizeActivity.class );
-                    next.putExtra( "email", Email );
-                    next.putExtra( "username", Username );
-                    startActivity( next );
+                if (checkModel.getStatus().equals("good to go")) {
+                    Intent next = new Intent(SignUpActivity.this, CustomizeActivity.class);
+                    next.putExtra("email", Email);
+                    next.putExtra("username", Username);
+                    startActivity(next);
                     return;
                 } else {
                     //Toast.makeText( SignUP.this, "user " + check.getStatus(), Toast.LENGTH_SHORT ).show();
-                    sn_em_error.setText( "exited" );
-                    sn_em_error.setTextColor( Color.RED );
+                    sn_em_error.setText("exited");
+                    sn_em_error.setTextColor(Color.RED);
                 }
             }
 
             @Override
             public void onFailure(Call<checkModel> call, Throwable t) {
-                Toast.makeText( SignUpActivity.this, "error" + t.getLocalizedMessage(), Toast.LENGTH_SHORT ).show();
-                Log.d( "error", "error   " + t.getLocalizedMessage() );
+                Toast.makeText(SignUpActivity.this, "error" + t.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                Log.d("error", "error   " + t.getLocalizedMessage());
 
 
             }
 
 
-        } );
+        });
     }
 }
 
