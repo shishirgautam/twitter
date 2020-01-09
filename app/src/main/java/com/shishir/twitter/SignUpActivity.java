@@ -31,7 +31,7 @@ public class SignUpActivity extends AppCompatActivity {
     int countUsername = 0;
     int initialbtn = 0;
     String method = "email";
-    String Email = "";
+    String Email= "";
     String Username = "";
     boolean chekU=false;
     boolean chekE=false;
@@ -69,6 +69,18 @@ public class SignUpActivity extends AppCompatActivity {
                                      }
                                  }
         );
+        btn_next.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                    Toast.makeText( SignUpActivity.this, "user@gmal.com", Toast.LENGTH_SHORT ).show();
+                    return;
+                }
+
+
+
+        });
+
 
         sn_username.addTextChangedListener( new TextWatcher() {
             @Override
