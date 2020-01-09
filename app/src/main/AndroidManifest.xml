@@ -19,7 +19,8 @@
         <activity android:name=".CameraActivity" />
         <activity
             android:name=".DashboardActivity"
-            android:label="@string/title_activity_dashboard"
+            android:label="title_activity_dash_board"
+            android:theme="@style/AppTheme.NoActionBar" />
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".CustomizeActivity" />
         <activity
