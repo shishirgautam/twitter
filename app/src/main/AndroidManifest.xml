@@ -16,7 +16,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".PasswordActivity"></activity>
+        <activity android:name=".TweetActivity"></activity>
+        <activity android:name=".PasswordActivity" />
         <activity
             android:name=".VerificationActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
