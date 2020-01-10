@@ -90,9 +90,10 @@ public class LoginActivity extends AppCompatActivity {
         StrictModeClass.StrictMode();
         if (loginBLL.checkUser( u.getEmail(), u.getPassword() )) {
             Store( u );
-            Intent intent = new Intent( LoginActivity.this, DashboardActivity.class );
-            Token = loginBLL.Token;
-            startActivity( intent );
+            Toast.makeText(this, "success", Toast.LENGTH_SHORT).show();
+//            Intent intent = new Intent( LoginActivity.this, DashboardActivity.class );
+//            Token = loginBLL.Token;
+//            startActivity( intent );
             //Toast.makeText( this, "welcome "+loginBLL.Token,Toast.LENGTH_SHORT ).show();
             return true;
         }
