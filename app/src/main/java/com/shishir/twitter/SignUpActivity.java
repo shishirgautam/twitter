@@ -78,7 +78,7 @@ public class SignUpActivity extends AppCompatActivity {
                     Checkuser(user);
 
                 } else {
-                    Toast.makeText(SignUpActivity.this, "fill require field with valid information", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SignUpActivity.this, " valid information", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
